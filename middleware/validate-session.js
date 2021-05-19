@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-var User = require('../models/user');
+var db = require('../db');
+var User = db.import('../models/user');
 
 module.exports = function (req, res, next) {
     if (req.method == 'OPTIONS') {
@@ -13,8 +14,8 @@ module.exports = function (req, res, next) {
                 if (decoded) {
                     User.findOne({ where: { id: decoded.id } }).then(user => {
                         req.user = user;
-                        console.log(`user: ${user}`)
-                        next()
+                        console.log(`user: ${JSON.stringify(user)}`);
+                        next();
                     },
                         function () {
                             res.status(401).send({ error: "not authorized" });
