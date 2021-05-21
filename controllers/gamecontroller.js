@@ -80,12 +80,17 @@ router.put('/update/:id', (req, res) => {
         owner_id: req.user.id,
       },
       returning: true,
-      plain: true,
     })
     .then(
-      function updateSuccess(result) {
+      function updateSuccess([updatedRowsCount, updatedRows]) {
+        if (!updatedRowsCount) {
+          return res.status(404).json({
+            message: 'No data to update.',
+          });
+        }
+
         res.status(200).json({
-          game: result[1].dataValues,
+          game: updatedRows[0],
           message: 'Successfully updated.',
         });
       },

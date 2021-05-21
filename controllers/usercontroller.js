@@ -9,7 +9,7 @@ router.post('/signup', (req, res) => {
   User.create({
     full_name: req.body.user.full_name,
     username: req.body.user.username,
-    passwordHash: bcrypt.hashSync(req.body.user.password, 10),
+    passwordhash: bcrypt.hashSync(req.body.user.password, 10),
     email: req.body.user.email,
   })
     .then(
@@ -42,9 +42,9 @@ router.post('/signin', (req, res) => {
       bcrypt.compare(
         req.body.user.password, 
         user.passwordHash, 
-        function (err, matches) {
+        (err, matches) => {
           if (!matches) {
-            return res.status(502).send({ error: 'Passwords do not match.' });
+            return res.status(401).send({ error: 'Passwords do not match.' });
           }
 
           const token = jwt.sign(

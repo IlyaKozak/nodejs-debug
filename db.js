@@ -12,6 +12,8 @@ const sequelize = new Sequelize(DB, DB_USER, DB_PASSWORD, {
   host: DB_HOST || 'localhost',
   port: DB_PORT || 5433,
   dialect: 'postgres',
+  logging: false,
+  operatorsAliases: false,
 });
 
 sequelize.authenticate().then(
