@@ -26,7 +26,8 @@ router.post('/signup', (req, res) => {
       },
 
       function signupFail(err) {
-        res.status(500).send(err.message);
+        const errorMessage = err.errors[0].message;
+        res.status(500).send(`${err.message} ${errorMessage}`);
       }
     );
 });
