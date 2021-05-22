@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-const db = require('../db');
-const User = db.import('../models/user');
+const User = require('../db').import('../models/user');
 
 module.exports = (req, res, next) => {
   if (req.method === 'OPTIONS') {
