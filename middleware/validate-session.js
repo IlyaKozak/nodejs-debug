@@ -21,6 +21,10 @@ module.exports = (req, res, next) => {
 
     User.findOne({ where: { id: decoded.id } })
       .then((user) => {
+        if (!user) {
+          return res.status(404).send({ error: 'No such user.' });
+        }
+
         req.user = user;
         console.log(`user: ${JSON.stringify(user)}`);
         next();
